@@ -1,0 +1,5349 @@
+openapi: 3.0.0
+info:
+  title: API DOCS PPOB
+  version: 1.0.0
+servers:
+  - url: http://34.101.78.228:2424/api/v1
+  - url: https://github.com/darulfh/skuy_pay_be.kucinghitam.tech/api/v1
+paths:
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Login user and admin
+      description: Login user with email and password
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/LoginRequest"
+      responses:
+        200:
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AuthResponse"
+
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: data not found
+
+  /register:
+    post:
+      tags:
+        - Auth
+      summary: Register user
+      description: Register user with email, name, phone and password
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RegisterRequest"
+      responses:
+        200:
+          description: User registered in successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AuthResponse"
+
+        404:
+          description: Email already in use
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: email already in use
+
+  /admin/register:
+    post:
+      tags:
+        - Auth
+      summary: Register admin
+      description: Register admin with with email, name, phone and password
+      operationId: registerAmdmin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RegisterRequest"
+      responses:
+        200:
+          description: User registered in successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AuthResponse"
+
+        404:
+          description: Email already in use
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: email already in use
+
+  /profile:
+    get:
+      tags:
+        - User
+      summary: Get User Profile
+      description: Get user profile by token
+      operationId: userProfile
+      security:
+        - bearerAuth: []
+
+      responses:
+        200:
+          description: Successfully get user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+  /user:
+    put:
+      tags:
+        - User
+      summary: Update User Profile
+      description: Update user profile by token
+      operationId: updateProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserUpdateRequest"
+      responses:
+        200:
+          description: Successfully update user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+    delete:
+      tags:
+        - User
+      summary: Delete User
+      description: Delete user by token
+      operationId: deleteUser
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully delete user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /user/image:
+    put:
+      tags:
+        - User
+      summary: Update Image Profile
+      description: Update image profile
+      operationId: updateImageProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              "$ref": "#/components/schemas/ImageRequest"
+      responses:
+        200:
+          description: Successfully update image user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /user/password:
+    put:
+      tags:
+        - User
+      summary: Update Password Profile
+      description: Update password profile
+      operationId: updatePasswordProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PasswordRequest"
+      responses:
+        200:
+          description: Successfully update image user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /user/pin:
+    post:
+      tags:
+        - User
+      summary: Check Pin user
+      description: Check pin User
+      operationId: checkPinUser
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully create pin user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Incorrect
+
+    put:
+      tags:
+        - User
+      summary: Create Pin Profile
+      description: Create pin profile
+      operationId: createPinProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePinRequest"
+      responses:
+        200:
+          description: Successfully create pin user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /user/pin/update:
+    put:
+      tags:
+        - User
+      summary: Update Pin Profile
+      description: Update pin profile
+      operationId: updatePinProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdatePinRequest"
+      responses:
+        200:
+          description: Successfully update pin user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /admin/ppd:
+    post:
+      tags:
+        - Pulsa Paket Data (PPD)
+      summary: Create PPD by admin
+      description: Create pulsa paket data by admin
+      operationId: createAdminPPD
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PPD"
+      responses:
+        200:
+          description: Successfully create ppd
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PPDResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+    get:
+      tags:
+        - Pulsa Paket Data (PPD)
+      summary: Get PPD by admin
+      description: Get pulsa paket data by admin
+      operationId: getAdminPPD
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - pulsa
+              - paket_data
+            example: pulsa
+        - in: query
+          name: provider
+          schema:
+            type: string
+            example: Telkomsel
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully get all ppd
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AllPPDResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: ppd not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: ppd not found
+
+  /admin/ppd/{id}:
+    put:
+      tags:
+        - Pulsa Paket Data (PPD)
+      summary: Update PPD by admin
+      description: Update pulsa paket data by admin
+      operationId: updateAdminPPD
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: PPD ID
+          required: true
+          schema:
+            type: string
+            example: 9a127d87-7ef9-4578-b50b-0d28a19e85d6
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PPD"
+      responses:
+        200:
+          description: Successfully update ppd
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PPDResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: ppd not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: ppd not found
+
+    delete:
+      tags:
+        - Pulsa Paket Data (PPD)
+      summary: Delete PPD by admin
+      description: Delete pulsa paket data by admin
+      operationId: deleteAdminPPD
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: PPD ID
+          required: true
+          schema:
+            type: string
+            example: 9a127d87-7ef9-4578-b50b-0d28a19e85d6
+
+      responses:
+        200:
+          description: Successfully delete ppd
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+              example:
+                status: 200
+                message: PPD deleted successfully
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+  /user/ppd:
+    get:
+      tags:
+        - Pulsa Paket Data (PPD)
+      summary: Get PPD by user
+      description: Get pulsa paket data by user
+      operationId: getUserPPD
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - pulsa
+              - paket_data
+            example: pulsa
+        - in: query
+          name: provider
+          required: true
+          schema:
+            type: string
+            example: Telkomsel
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully get all ppd
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AllPPDResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: ppd not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: ppd not found
+    post:
+      tags:
+        - Pulsa Paket Data (PPD)
+      summary: Create Transaction PPD
+      description: Create Transaction PPD
+      operationId: createTransactionPPD
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TransactionPPDRequest"
+      responses:
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: ppd not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: ppd not found
+
+  /user/email:
+    get:
+      tags:
+        - User
+      summary: Get User By Email
+      description: Get user by email
+      operationId: userEmailProfile
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+            example: user1@gmail.com
+
+      responses:
+        200:
+          description: Successfully get user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /user/pin/{id}:
+    post:
+      tags:
+        - User
+      summary: Check Pin by UserID
+      description: Check pin by user id
+      operationId: checkPinUserId
+      parameters:
+        - name: id
+          in: path
+          description: PPD ID
+          required: true
+          schema:
+            type: string
+            example: 9a127d87-7ef9-4578-b50b-0d28a19e85d6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pin:
+                  type: string
+                  example: 2222
+      responses:
+        200:
+          description: Successfully check pin by user id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: ppd not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: ppd not found
+
+  /user/password/forgot/{id}:
+    post:
+      tags:
+        - User
+      summary: Update New Password by Email
+      description: Update new password by email
+      operationId: updateNewPasswordEmail
+      parameters:
+        - name: id
+          in: path
+          description: PPD ID
+          required: true
+          schema:
+            type: string
+            example: 9a127d87-7ef9-4578-b50b-0d28a19e85d6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pin:
+                  type: string
+                  example: 2222
+      responses:
+        200:
+          description: Successfully update password
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AuthResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: ppd not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: ppd not found
+
+  /admin/pdam:
+    post:
+      tags:
+        - PDAM
+      summary: Create PDAM by admin
+      description: Create PDAM by admin
+      operationId: createPDAMbyAdmin
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePDAM"
+      responses:
+        200:
+          description: Successfully create pdam
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PDAMResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: pdam not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: pdam not found
+
+  /pdams:
+    get:
+      tags:
+        - PDAM
+      summary: Get All PDAM by admin and user
+      description: Get all PDAM by allrole
+      operationId: getallAllRolePDAM
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully get all PDAM
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AllPDAMResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: PDAM not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: PDAM not found
+
+  /pdam/{id}:
+    get:
+      tags:
+        - PDAM
+      summary: Get PDAM by ID
+      description: Get PDAM data by ID
+      operationId: getPDAMbyid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: PDAM ID
+          required: true
+          schema:
+            type: string
+            example: 30998f62-7dbc-4ce2-8649-ac8ed5f490de
+
+      responses:
+        200:
+          description: Successfully get Wifi
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PDAMResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: PDAM not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: PDAM not found
+
+  /admin/pdam/{id}:
+    put:
+      tags:
+        - PDAM
+      summary: Update PDAM by admin
+      description: Update PDAM by admin
+      operationId: updateAdminPDAM
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: PDAM ID
+          required: true
+          schema:
+            type: string
+            example: 30998f62-7dbc-4ce2-8649-ac8ed5f490de
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdatePDAM"
+      responses:
+        200:
+          description: Successfully update PDAM
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PDAMResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Wifi not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: PDAM not found
+    delete:
+      tags:
+        - PDAM
+      summary: Delete PDAM by admin
+      description: Delete PDAM by admin
+      operationId: deleteAdminPDAM
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: PDAM ID
+          required: true
+          schema:
+            type: string
+            example: 30998f62-7dbc-4ce2-8649-ac8ed5f490de
+
+      responses:
+        200:
+          description: Successfully delete PDAM
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+              example:
+                status: 200
+                message: PDAM deleted successfully
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+  /pdam/inquiry:
+    post:
+      tags:
+        - PDAM
+      summary: Post Bill Inquiry by user
+      description: Post bill inquiry by user
+      operationId: postbillinquiryUserPDAM
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BillInquiryPDAMRequest"
+      responses:
+        200:
+          description: Successfully Get Bill
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BillInquiryPDAMResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: PDAM not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: PDAM not found
+
+  /pdam/pay:
+    post:
+      tags:
+        - PDAM
+      summary: Post Pay Bill by user
+      description: Post Pay Bill by user
+      operationId: postpaybilluserPDAM
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PayBillPDAMRequest"
+      responses:
+        200:
+          description: Successfully Pay Bill
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PayBillPDAM"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: PDAM not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: PDAM not found
+
+  #Wifi
+  /admin/wifi:
+    post:
+      tags:
+        - Internet (Wifi)
+      summary: Create Wifi by admin
+      description: Create Internet by admin
+      operationId: createadminWifi
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/NewWifi"
+      responses:
+        200:
+          description: Successfully create Wifi
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WifiResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /wifis:
+    get:
+      tags:
+        - Internet (Wifi)
+      summary: Get All Wifis by admin and user
+      description: Get all Wifis by allrole
+      operationId: getallAllRoleWifis
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully get all Wifi
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AllWifisResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Wifi not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Wifi not found
+
+  /wifi/{id}:
+    get:
+      tags:
+        - Internet (Wifi)
+      summary: Get Wifi by ID
+      description: get Wifi data by ID
+      operationId: getWifibyid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Wifi ID
+          required: true
+          schema:
+            type: string
+            example: d53f35e6-0fcc-4114-a474-a5c39535e901
+
+      responses:
+        200:
+          description: Successfully get Wifi
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WifiResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: Wifi not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Wifi not found
+
+  /admin/wifi/{id}:
+    put:
+      tags:
+        - Internet (Wifi)
+      summary: Update Wifi by admin
+      description: update Wifi data by admin
+      operationId: updateAdminWifi
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Wifi ID
+          required: true
+          schema:
+            type: string
+            example: d53f35e6-0fcc-4114-a474-a5c39535e901
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/NewWifi"
+      responses:
+        200:
+          description: Successfully update Wifi
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WifiResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Wifi not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Wifi not found
+
+    delete:
+      tags:
+        - Internet (Wifi)
+      summary: Delete Wifi by admin
+      description: Delete Wifi by admin
+      operationId: deleteAdminWifi
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Wifi ID
+          required: true
+          schema:
+            type: string
+            example: d53f35e6-0fcc-4114-a474-a5c39535e901
+
+      responses:
+        200:
+          description: Successfully delete Wifi
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+              example:
+                status: 200
+                message: Wifi deleted successfully
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /wifi/inquiry:
+    post:
+      tags:
+        - Internet (Wifi)
+      summary: Post Bill Inquiry by user
+      description: Post bill inquiry by user
+      operationId: postbillinquiryUserWifi
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BillInquiryWifiRequest"
+      responses:
+        200:
+          description: Successfully Get Bill
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BillInquiryWifiResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Wifi not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Wifi not found
+  /wifi/pay:
+    post:
+      tags:
+        - Internet (Wifi)
+      summary: Post Pay Bill by user
+      description: Post Pay Bill by user
+      operationId: postpaybilluserWifi
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PayBillWifiRequest"
+      responses:
+        200:
+          description: Successfully PayBill
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PayBillWifiResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Wifi not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Wifi not found
+
+  /admin/electricity:
+    post:
+      tags:
+        - Electricity
+      summary: Create Electricity by admin
+      description: Create Electricity by admin
+      operationId: createElectricity
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateElectricityRequest"
+
+      responses:
+        200:
+          description: Successfully Create Electricity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ElectricityResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Electricity not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Electricity not found
+
+  /electricitys:
+    get:
+      tags:
+        - Electricity
+      summary: Get All Electricity by admin and user
+      description: Get All Electricity by all role
+      operationId: getallAllRoleElectricity
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully Get Electricity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AllElectricitysResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /electricity/{id}:
+    get:
+      tags:
+        - Electricity
+      summary: Get Electricity by id
+      description: Get Electricity by id
+      operationId: getElectricitybyid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Electricity ID
+          required: true
+          schema:
+            type: string
+            example: 02f2b98a-908a-4a0a-ac15-53e9e0ab51a3
+
+      responses:
+        200:
+          description: Successfully Get Electricity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ElectricityResponse"
+
+  /admin/electricity/{id}:
+    put:
+      tags:
+        - Electricity
+      summary: Update Electricity by admin
+      description: Update Electricity by admin
+      operationId: UpdateElectricity
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Electricity ID
+          required: true
+          schema:
+            type: string
+            example: 02f2b98a-908a-4a0a-ac15-53e9e0ab51a3
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateElectricityRequest"
+
+      responses:
+        200:
+          description: Successfully update Electricity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ElectricityResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+    delete:
+      tags:
+        - Electricity
+      summary: Delete Electricity by admin
+      description: Delete Electricity by admin
+      operationId: deleteElectricity
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Electricity ID
+          required: true
+          schema:
+            type: string
+            example: 02f2b98a-908a-4a0a-ac15-53e9e0ab51a3
+      responses:
+        200:
+          description: Successfully Delete Electricity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /electricity/postpaid/inquiry:
+    post:
+      tags:
+        - Electricity
+      summary: Electricity Post Paid Bill Inquiry (Tagihan)
+      description: Electricity Post Paid Bill Inquiry (Tagihan)
+      operationId: postPaid(Tagihan)
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PostPaidBillInquiryElectricityRequest"
+      responses:
+        200:
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PostPaidBillInquiryElectricity"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Electricity not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Electricity not found
+
+  /electricity/prepaid/inquiry:
+    post:
+      tags:
+        - Electricity
+      summary: Electricity Pre Paid Bill Inquiry (TOKEN)
+      description: Electricity Pre Paid Bill Inquiry (TOKEN)
+      operationId: postprePaid(TOKEN)
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PrePaidBillInquiryElectricityRequest"
+      responses:
+        200:
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PrePaidBillInquiryResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Electricity not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Electricity not found
+
+  /electricity/postpaid/pay:
+    post:
+      tags:
+        - Electricity
+      summary: Electricity Pay Bill (Tagihan)
+      description: Electricity Pay Bill (Tagihan)
+      operationId: postpaybill(Tagihan)
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PayBillElectricityRequest"
+      responses:
+        200:
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PayBillElectricityResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Electricity not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Electricity not found
+
+  /admin/insurance:
+    post:
+      tags:
+        - Insurance (BPJS)
+      summary: Create Insurance (BPJS) by admin
+      description: Create Insurance (BPJS) by admin
+      operationId: createBPJS
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateBPJSRequest"
+      responses:
+        200:
+          description: Successfully Create BPJS
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BPJSResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /admin/insurance/{id}:
+    put:
+      tags:
+        - Insurance (BPJS)
+      summary: Update Insurance (BPJS) by admin
+      description: Update Insurance (BPJS) by admin
+      operationId: updateAdminBPJS
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: BPJS ID
+          required: true
+          schema:
+            type: string
+            example: d6b44de0-3794-407e-b485-29e4bc1578a4
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateInsurenceRequest"
+      responses:
+        200:
+          description: Successfully update BPJS
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BPJSResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+    delete:
+      tags:
+        - Insurance (BPJS)
+      summary: Delete Insurence (BPJS) by admin
+      description: Delete Insurence (BPJS) by admin
+      operationId: deleteAdminBPJS
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: BPJS ID
+          required: true
+          schema:
+            type: string
+            example: d6b44de0-3794-407e-b485-29e4bc1578a4
+      responses:
+        200:
+          description: Successfully delete BPJS
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MetadataResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /insurances:
+    get:
+      tags:
+        - Insurance (BPJS)
+      summary: Get All Insurence (BPJS) by admin and user
+      description: Get All Insurence (BPJS) by admin and user
+      operationId: getallAllRoleInsurence
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully Get All BPJS
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BPJSResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /insurance/{id}:
+    get:
+      tags:
+        - Insurance (BPJS)
+      summary: Get Insurance (BPJS) by id
+      description: Get Insurance (BPJS) data by id
+      operationId: getInsurance(BPJS)byid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: BPJS ID
+          required: true
+          schema:
+            type: string
+            example: d6b44de0-3794-407e-b485-29e4bc1578a4
+
+      responses:
+        200:
+          description: Successfully Get BPJS
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BPJSResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /insurance/inquiry:
+    post:
+      tags:
+        - Insurance (BPJS)
+      summary: Post Bill Inquiry Insurance (BPJS) by user
+      description: Post Bill Inquiry Insurance (BPJS) by User
+      operationId: postbillInquiryUserInsurance
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BillInquiryInsuranceBPJSRequest"
+      responses:
+        200:
+          description: Successfully Pay Bill
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BillInsuranceBPJSResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Bill not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Bill not found
+
+  /insurance/pay:
+    post:
+      tags:
+        - Insurance (BPJS)
+      summary: Post Pay Bill Insurance (BPJS) by user
+      description: Post Bill Insurance (BPJS) by User
+      operationId: postpaybilluserInsurance
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PayBillInsuranceRequest"
+      responses:
+        200:
+          description: Successfully Pay Bill
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PayBillInsuranceResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Bill not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Bill not found
+
+  /admin/bank:
+    post:
+      tags:
+        - Bank
+      summary: Create Bank by admin
+      description: Create Bank by admin
+      operationId: createAdminBank
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload
+                name:
+                  type: string
+                  description: The name of the bank
+                bank_code:
+                  type: string
+                  description: The bank code
+      responses:
+        200:
+          description: Successfully Create Bank
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Bank"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Bank not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Bank not found
+
+  /banks:
+    get:
+      tags:
+        - Bank
+      summary: Get All Banks by admin and user
+      description: Get All Banks by admin and user
+      operationId: getallAllRoleBank
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        200:
+          description: Successfully Get All Banks
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BankResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: Bank not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Bank not found
+
+  /bank/{id}:
+    get:
+      tags:
+        - Bank
+      summary: Get Bank by ID
+      description: Get Bank by ID
+      operationId: getBankbyid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Bank ID
+          required: true
+          schema:
+            type: string
+            example: 28995eac-338e-4676-b75c-fd786e990791
+
+      responses:
+        200:
+          description: Successfully Get Bank
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BankResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+        404:
+          description: Bank not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Bank not found
+
+  /admin/bank/{id}:
+    put:
+      tags:
+        - Bank
+      summary: Update Bank by admin
+      description: Update Bank by admin
+      operationId: updateAdminBank
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Bank ID
+          required: true
+          schema:
+            type: string
+            example: 28995eac-338e-4676-b75c-fd786e990791
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload
+                name:
+                  type: string
+                  description: The name of the bank
+                  example: BCA
+                bank_code:
+                  type: string
+                  description: The bank code
+                  example: "014"
+                  default: "014"
+      responses:
+        200:
+          description: Successfully Update Bank
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Bank"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+    delete:
+      tags:
+        - Bank
+      summary: Delete Bank by admin
+      description: Delete Bank by admin
+      operationId: deleteAdminBank
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Bank ID
+          required: true
+          schema:
+            type: string
+            example: 28995eac-338e-4676-b75c-fd786e990791
+
+      responses:
+        200:
+          description: Successfully delete Bank
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+                example:
+                  status: 200
+                  message: Bank deleted successfully
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Bank not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Bank not found
+
+  /admin/users:
+    get:
+      tags:
+        - Users
+      summary: Get All User by admin
+      description: Get All User by admin
+      operationId: getalluserbyadmin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: name
+          in: query
+          description: name
+          required: false
+          schema:
+            type: string
+            example: iy
+      responses:
+        200:
+          description: Successfully Get All User
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserPaginationrResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /admin/users/query:
+    get:
+      tags:
+        - Users
+      summary: Get Users by Query
+      description: Get Users by Query
+      operationId: getusersbyquery
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: query
+          in: query
+          description: query
+          required: false
+          schema:
+            type: string
+            example: ar
+      responses:
+        200:
+          description: Successfully Get User bY query
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserPaginationrResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /admin/user/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get Users by id
+      description: Get Users by id
+      operationId: getusersbyid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: 2098604d-0038-47e7-a074-2646412b45c2
+
+      responses:
+        200:
+          description: Successfully Get User bY query
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Users"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: User not found
+
+  /amount:
+    get:
+      tags:
+        - Balance
+      summary: Create Va by User
+      description: Create Va by User
+      operationId: getbalanceuser
+      security:
+        - bearerAuth: []
+
+      responses:
+        200:
+          description: Successfully Create Va
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GenerateVaUsersResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: Va_number not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Va_number not found
+
+  /amount/status:
+    get:
+      tags:
+        - Balance
+      summary: Create Va by User
+      description: Create Va by User
+      operationId: postbalanceuser
+      security:
+        - bearerAuth: []
+
+      responses:
+        200:
+          description: Successfully Top Up Amount
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CreateAmountStatusResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: Amount not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Amount not found
+
+  /user/transactions/:
+    get:
+      tags:
+        - User
+      summary: Get Transaction by UserID
+      description: Get Transaction by UserID
+      operationId: gettransactionbyuserID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        200:
+          description: Successfully Get Transaction
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PostPaidBillInquiryResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /transaction/{id}:
+    get:
+      tags:
+        - Transaction
+      summary: Get Transaction by id
+      description: Get Transaction by id
+      operationId: gettransactionbyid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Transaction ID
+          required: true
+          schema:
+            type: string
+            example: POSTPAID-5027814984745959
+      responses:
+        200:
+          description: Successfully Get Transaction
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PostPaidBillInquiryResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /admin/discount:
+    post:
+      tags:
+        - Discount
+      summary: Create Discount by admin
+      description: Create Discount by admin
+      operationId: creatediscountbyadmin
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                discount_code:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload
+                discount_price:
+                  type: integer
+      responses:
+        200:
+          description: Successfully Create discount
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DiscountResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: discount not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: discount not found
+  /discounts:
+    get:
+      tags:
+        - Discount
+      summary: Get All Discount by admin and user
+      description: Get All Discount by admin and user
+      operationId: getallDiscount
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully Get Discount
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AllDiscountResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: discount not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: discount not found
+
+  /discount/{id}:
+    get:
+      tags:
+        - Discount
+      summary: Get Discount by ID
+      description: Get Discount by ID
+      operationId: getDiscountbyID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: 7e33b4c1-5d72-4f55-af6c-45daf9a3e6b6
+      responses:
+        200:
+          description: Successfully Get Discount
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AllDiscountResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: discount not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: discount not found
+
+  /admin/discount/{id}:
+    put:
+      tags:
+        - Discount
+      summary: Update Discount by admin
+      description: Update Discount by admin
+      operationId: updatediscountbyadmin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: 7e33b4c1-5d72-4f55-af6c-45daf9a3e6b6
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                discount_code:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload
+                discount_price:
+                  type: integer
+      responses:
+        200:
+          description: Successfully Update discount
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DiscountResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+
+        404:
+          description: discount not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: discount not found
+
+    delete:
+      tags:
+        - Discount
+      summary: Delete Discount by admin
+      description: Delete Discount by admin
+      operationId: deleteAdminDiscount
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Discount ID
+          required: true
+          schema:
+            type: string
+            example: 7e33b4c1-5d72-4f55-af6c-45daf9a3e6b6
+
+      responses:
+        200:
+          description: Successfully Delete Discount
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Discount not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Discount not found
+
+  /discount/code:
+    post:
+      tags:
+        - Discount
+      summary: Get Discount by code
+      description: Get Discount by code
+      operationId: getDiscountbycode
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DiscountRequest"
+      responses:
+        200:
+          description: Successfully Delete Discount
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Discount not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Discount not found
+
+  /admin/transactions/product/:
+    get:
+      tags:
+        - Transaction
+      summary: Get All Transaction by Product
+      description: Get AllTransaction by Product
+      operationId: getalltransactionbyproduct
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: product
+          in: query
+          description: name_product
+          required: false
+          schema:
+            type: string
+            example: Insurance
+        - name: status
+          in: query
+          description: Status
+          required: false
+          schema:
+            type: string
+            example: successful
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 10
+            example: 10
+      responses:
+        200:
+          description: Successfully Get Transaction
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PayBillWifiResponse"
+                  - $ref: "#/components/schemas/PayBillPDAMResponse"
+                  - $ref: "#/components/schemas/PayBillElectricityResponse"
+                  - $ref: "#/components/schemas/PayBillInsuranceResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /admin/transactions/price/product/count:
+    get:
+      tags:
+        - Transaction
+      summary: Get All Transaction by Product Price Count
+      description: Get All Transaction by Product Price Count
+      operationId: getalltransactionbyproductpricecount
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 10
+            example: 10
+
+      responses:
+        200:
+          description: Successfully Total Transactions by Product Type
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TransactionbyproducttypeResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /admin/transactions/search/:
+    get:
+      tags:
+        - Transaction
+      summary: Get All Transaction by Query
+      description: Get All Transaction by Query
+      operationId: getalltransactionbyquery
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: query
+          in: query
+          description: Product Name or Name User
+          required: false
+          schema:
+            type: string
+            example: Insurance
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 10
+            example: 10
+
+      responses:
+        200:
+          description: Successfully Get Transaction
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PayBillWifiResponse"
+                  - $ref: "#/components/schemas/PayBillPDAMResponse"
+                  - $ref: "#/components/schemas/PayBillElectricityResponse"
+                  - $ref: "#/components/schemas/PayBillInsuranceResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /admin/transactions/status/search/:
+    get:
+      tags:
+        - Transaction
+      summary: Get All Transaction by Status Query
+      description: Get All Transaction by StatusQuery
+      operationId: getalltransactionbystatusquery
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          description: status transaction
+          required: false
+          schema:
+            type: string
+            example: successful
+        - name: query
+          in: query
+          description: Product Name or Name User
+          required: false
+          schema:
+            type: string
+            example:
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 10
+            example: 10
+
+      responses:
+        200:
+          description: Successfully Get Transaction
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PayBillWifiResponse"
+                  - $ref: "#/components/schemas/PayBillPDAMResponse"
+                  - $ref: "#/components/schemas/PayBillElectricityResponse"
+                  - $ref: "#/components/schemas/PayBillInsuranceResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /admin/transactions/user/{id}:
+    get:
+      tags:
+        - Transaction
+      summary: Get All Transaction User by ID
+      description: Get All Transaction User by ID
+      operationId: getalltransactionbyid
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+            example: 538f1dbd-3be9-4a49-9e4b-e0f48ab3982d
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 10
+            example: 10
+      responses:
+        200:
+          description: Successfully Get Transaction
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PayBillWifiResponse"
+                  - $ref: "#/components/schemas/PayBillPDAMResponse"
+                  - $ref: "#/components/schemas/PayBillElectricityResponse"
+                  - $ref: "#/components/schemas/PayBillInsuranceResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /admin/transactions:
+    get:
+      tags:
+        - Transaction
+      summary: Get All Transaction
+      description: Get AllTransaction
+      operationId: getalltransaction
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: product
+          in: query
+          description: Product Name
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status
+          required: false
+          schema:
+            type: string
+        - name: Page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 10
+            example: 10
+      responses:
+        200:
+          description: Successfully Get Transaction
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PayBillWifiResponse"
+                  - $ref: "#/components/schemas/PayBillPDAMResponse"
+                  - $ref: "#/components/schemas/PayBillElectricityResponse"
+                  - $ref: "#/components/schemas/PayBillInsuranceResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+  /admin/transactions/price/month/count:
+    get:
+      tags:
+        - Transaction
+      summary: Get All Transaction by Price Month Count
+      description: Get All Transaction by Price Month Count
+      operationId: getalltransactionbypricemonthcount
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully Total Transactions by Product Type
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TransactionbyproducttypeResponse"
+
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 401
+                message: Token unauthorized
+        404:
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Metadata"
+              example:
+                status: 404
+                message: Transaction not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  # parameters:
+
+  schemas:
+    # Response
+    AuthResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          $ref: "#/components/schemas/AuthData"
+
+    UserResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          $ref: "#/components/schemas/UserData"
+
+    UserPaginationrResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserData"
+        pagination:
+          $ref: "#/components/schemas/Pagination"
+
+    MetadataResponse:
+      type: object
+      properties:
+        data:
+          type: string
+          default: null
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+
+    PPDResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          $ref: "#/components/schemas/PPD"
+
+    AllPPDResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PPD"
+
+    PDAMResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          $ref: "#/components/schemas/PDAM"
+
+    AllPDAMResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          $ref: "#/components/schemas/PDAM"
+
+    BillInquiryPDAMResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/BillInquiryPDAM"
+
+    PayBillPDAMResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayBillPDAM"
+
+    WifiResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Wifi"
+
+    AllWifisResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Wifi"
+
+    BillInquiryWifiResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/BillInquiryWifi"
+
+    PayBillWifiResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayBillWifi"
+
+    ElectricityResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Electricity"
+
+    AllElectricitysResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Electricity"
+
+    PostPaidBillInquiryResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PostPaidBillInquiryElectricity"
+        pagination:
+          $ref: "#/components/schemas/Pagination"
+
+    GetTransactionUserIDResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PostPaidBillInquiryElectricity"
+    PrePaidBillInquiryResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PrePaidBillInquiryElectricity"
+
+    PayBillElectricityResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayBillElectricity"
+
+    BPJSResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/BPJS"
+
+    AllInsuranceBPJSResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/BPJS"
+
+    BillInsuranceBPJSResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/BillInquiryInsuranceBPJS"
+
+    PayBillInsuranceResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayBillInsurance"
+
+    BankResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Bank"
+
+    DiscountResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Discount"
+
+    AllDiscountResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Discount"
+
+    UsersResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Users"
+
+    GenerateVaUsersResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Amount"
+
+    CreateAmountStatusResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/AmountStatus"
+
+    TransactionbyproducttypeResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Transactionbyproducttype"
+
+    # Request
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          default: user1@gmail.com
+        password:
+          type: string
+          default: 12345678
+
+    RegisterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          default: user1
+        email:
+          type: string
+          default: user1@gmail.com
+        phone:
+          type: string
+          default: 6288811112222
+        password:
+          type: string
+          default: 12345678
+
+    ImageRequest:
+      type: object
+      properties:
+        image:
+          type: string
+          format: binary
+
+    UserUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          default: user1
+        email:
+          type: string
+          default: user1@gmail.com
+        phone:
+          type: string
+          default: 6288811112222
+
+    PasswordRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          example: password1
+        new_password:
+          type: string
+          example: password2
+
+    CreatePinRequest:
+      type: object
+      properties:
+        pin:
+          type: string
+          example: 1111
+
+    UpdatePinRequest:
+      type: object
+      properties:
+        pin:
+          type: string
+          example: 1111
+        new_pin:
+          type: string
+          example: 2222
+
+    TransactionPPDRequest:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - paket_data
+            - pulsa
+          example: "paket_data"
+        product_id:
+          type: string
+          example: "e56d5697-e412-4fd7-968c-d4cc9a6d7317"
+        discount_id:
+          type: string
+          example: "87c3b410-6aa5-4028-83e0-a30f2e36270e"
+        phone_number:
+          type: string
+          example: "08132132132"
+
+    CreatePDAM:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          example: 9098099011111
+        provider_name:
+          type: string
+          example: pdamkab.mojokerto
+        product_type:
+          type: string
+          example: pdam
+        name:
+          type: string
+          example: Arbiansyah
+        address:
+          type: string
+          example: mojokerto2
+        period:
+          type: string
+          example: 2022/2023
+        discount_id:
+          type: string
+          example: ab57b255-64ea-4899-aa46-1d028c93da6c
+        price:
+          type: integer
+          example: 800000
+
+    UpdatePDAM:
+      type: object
+      properties:
+        provider_name:
+          type: string
+          example: pdamkab.Makassar
+        address:
+          type: string
+          example: makassar
+
+    BillInquiryPDAMRequest:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          example: 9098099011111
+        discount_id:
+          type: string
+          example: 722abee6-f0bc-4cf7-9590-a447e7e3857b
+        product_id:
+          type: string
+          example: pdamkab.sidoarjo
+
+    PayBillPDAMRequest:
+      type: object
+      properties:
+        partner_tx_id:
+          type: string
+          example: PDAM-8820186550780494
+
+    BillInquiryWifiRequest:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          example: 1234567897
+        discount_id:
+          type: string
+          example: 5bb3bfb3-e671-4fa8-ac6a-2c159d157502
+        product_id:
+          type: string
+          example: TELKOM
+
+    PayBillWifiRequest:
+      type: object
+      properties:
+        partner_tx_id:
+          type: string
+          example: WIFI-7549611124452784
+
+    CreateElectricityRequest:
+      type: object
+      properties:
+        provider_name:
+          type: string
+          example: PLN POSTPAID
+        product_type:
+          type: string
+          example: PLNPRE
+
+    UpdateElectricityRequest:
+      type: object
+      properties:
+        provider_name:
+          type: string
+          example: "PLN POSTPAID"
+        product_type:
+          type: string
+          example: "PLNPRO"
+
+    PostPaidBillInquiryElectricityRequest:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          example: 98980
+        discount_id:
+          type: string
+          example: 722abee6-f0bc-4cf7-9590-a447e7e3857b
+        product_id:
+          type: string
+          example: plnpost
+
+    PrePaidBillInquiryElectricityRequest:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          example: 123456789112
+        discount_id:
+          type: string
+          example: fa44933e-1f93-4891-adef-0266654c07f6
+        product_id:
+          type: string
+          example: plnpre
+        amount:
+          type: integer
+          example: 20000
+
+    PayBillElectricityRequest:
+      type: object
+      properties:
+        partner_tx_id:
+          type: string
+          example: PREPAID-8175262227193358
+
+    CreateBPJSRequest:
+      type: object
+      properties:
+        provider_name:
+          type: string
+          example: BPJS
+        product_type:
+          type: string
+          example: BPJSKS
+        name:
+          type: string
+          example: Aul
+        period:
+          type: string
+          example: 2021-2022
+        class:
+          type: string
+          example: 1
+        Number_of_family:
+          type: integer
+          example: 1
+        discount_id:
+          type: string
+          example: ab57b255-64ea-4899-aa46-1d028c93da6c
+        price:
+          type: number
+          example: 140000
+
+    UpdateInsurenceRequest:
+      type: object
+      properties:
+        provider_name:
+          type: string
+          example: BPJS
+        product_type:
+          type: string
+          example: BPJSKS
+
+    BillInquiryInsuranceBPJSRequest:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          example: 909289212
+        discount_id:
+          type: string
+          example: 722abee6-f0bc-4cf7-9590-a447e7e3857b
+        product_id:
+          type: string
+          example: BPJSKS
+
+    PayBillInsuranceRequest:
+      type: object
+      properties:
+        partner_tx_id:
+          type: string
+          example: insurance-1994557244623350
+
+    GenerateVaUsersRequest:
+      type: object
+      properties:
+        bank_code:
+          type: string
+          example: 002
+
+    CreateAmountStatusRequest:
+      type: object
+      properties:
+        va_number:
+          type: string
+          example: 100536000000022676
+        amount:
+          type: string
+          example: 10000000
+        partner_user_id:
+          type: string
+          example: 9900b6ca-a5d0-4979-b463-388243cc2725
+        success:
+          type: string
+          example: true
+
+    DiscountRequest:
+      type: object
+      properties:
+        discount_code:
+          type: string
+          example: "014"
+          default: "014"
+
+    # PPDRequest:
+    # type:
+
+    # Model
+    Metadata:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    AuthData:
+      type: object
+      properties:
+        id:
+          type: string
+          default: "54c5a93f-1570-4f6c-b5f9-c8acb02f9329"
+        name:
+          type: string
+          default: "user1"
+        email:
+          type: string
+          default: user1@gmail.com
+        token:
+          type: string
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2ODg4NDEzODMsInVzZXJJZCI6IjU0YzVhOTNmLTE1NzAtNGY2Yy1iNWY5LWM4YWNiMDJmOTMyOSIsInVzZXJfdHlwZSI6InVzZXIifQ.J2KTOXYPY5xBi9tCegnxcoM0nHexAxQ2gYcavKKh-1Es
+
+    UserData:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 54c5a93f-1570-4f6c-b5f9-c8acb02f9329
+        name:
+          type: string
+          example: "user1"
+        email:
+          type: string
+          example: user1@gmail.com
+        balance:
+          type: number
+          example: 100000
+        phone:
+          type: string
+          example: 6288811112222
+        image:
+          type: string
+          example: https://res.cloudinary.com/duoehn6px/image/upload/v1686318149/ppob/fg7197hkjzqfcibznm4k.png
+        created_at:
+          type: string
+          example: 2023-06-09T09:03:09.252379778Z
+        updated_at:
+          type: string
+          example: 2023-06-09T09:03:09.252379778Z
+
+    PPD:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Internet Bulanan OMG 100rb
+        type:
+          type: string
+          default: pulsa
+          enum: [pulsa, paket_data]
+
+        code:
+          type: string
+          example: TSOMG75
+        provider:
+          type: string
+          example: Telkomsel
+        price:
+          type: number
+          example: 100000
+        is_active:
+          type: boolean
+          example: true
+        description:
+          type: string
+          example: Kouta Utama 20 GB, Kouta malam 5GB
+
+    PDAM:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 30998f62-7dbc-4ce2-8649-ac8ed5f490de
+        CreatedAt:
+          type: string
+          example: 2023-06-16T17:00:09.329441397Z
+        UpdatedAt:
+          type: string
+          example: 2023-06-16T17:00:09.329441397Z
+        DeletedAt:
+          type: string
+          example: 2023-06-16T17:00:09.329441397Z
+        customer_id:
+          type: string
+          example: 37e30eed-c39e-450d-8988-f361f1ea6e27
+        provider_name:
+          type: string
+          example: pdamkab.mojokerto
+        product_type:
+          type: string
+          example: pdam
+        name:
+          type: string
+          example: Arbiansyah
+        address:
+          type: string
+          example: mojokerto
+        period:
+          type: string
+          example: "2022/2023"
+        discount_id:
+          type: string
+          example: ab57b255-64ea-4899-aa46-1d028c93da6c
+        price:
+          type: number
+          example: 800000
+
+    BillInquiryPDAM:
+      type: object
+      properties:
+        id:
+          type: string
+          example: PDAM-6793564591872557
+        user_id:
+          type: string
+          example: 9900b6ca-a5d0-4979-b463-388243cc2725
+        status:
+          type: string
+          example: unpaid
+        product_type:
+          type: string
+          example: pdamkab.sidoarjo
+        product_detail:
+          $ref: "#/components/schemas/ProductDetailPDAM"
+        description:
+          type: string
+          example: Pembayaran Tagihan PDAM
+        discount_price:
+          type: integer
+          example: 0
+        admin_fee:
+          type: integer
+          example: 2500
+        price:
+          type: integer
+          example: 254495
+        total_price:
+          type: integer
+          example: 256295
+        created_at:
+          type: string
+          example: "2023-06-22T06:43:25.789722531Z"
+        updated_at:
+          type: string
+          example: "2023-06-22T06:43:25.789722531Z"
+        deleted_at:
+          type: string
+          nullable: true
+          example: null
+    ProductDetailPDAM:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          nullable: true
+          example: null
+        customer_id:
+          type: string
+          example: "9098099011111"
+        provider_name:
+          type: string
+          example: pdamkab.sidoarjo
+        product_type:
+          type: string
+          example: pdamkab.sidoarjo
+        name:
+          type: string
+          example: usman
+        address:
+          type: string
+          example: ""
+        period:
+          type: string
+          example: June-2023
+        discount_id:
+          type: string
+          example: ""
+        price:
+          type: integer
+          example: 254495
+
+    PayBillPDAM:
+      type: object
+      properties:
+        id:
+          type: string
+          example: PDAM-6793564591872557
+        user_id:
+          type: string
+          example: 9900b6ca-a5d0-4979-b463-388243cc2725
+        status:
+          type: string
+          example: successful
+        product_type:
+          type: string
+          example: pdamkab.sidoarjo
+        product_detail:
+          $ref: "#/components/schemas/productdetailPDAM"
+        description:
+          type: string
+          example: Pembayaran Tagihan PDAM
+        discount_price:
+          type: integer
+          example: 0
+        admin_fee:
+          type: integer
+          example: 2500
+        price:
+          type: integer
+          example: 254495
+        total_price:
+          type: integer
+          example: 256295
+        created_at:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        updated_at:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        deleted_at:
+          type: string
+          nullable: true
+          example: null
+    productdetailPDAM:
+      type: object
+      properties:
+        CreatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          nullable: true
+          example: null
+        UpdatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        address:
+          type: string
+          example: ""
+        customer_id:
+          type: string
+          example: "9098099011111"
+        discount_id:
+          type: string
+          example: ""
+        id:
+          type: string
+          example: ""
+        name:
+          type: string
+          example: usman
+        period:
+          type: string
+          example: June-2023
+        price:
+          type: integer
+          example: 254495
+        product_type:
+          type: string
+          example: pdamkab.sidoarjo
+        provider_name:
+          type: string
+          example: pdamkab.sidoarjo
+
+    Wifi:
+      type: object
+      properties:
+        id:
+          type: string
+          example: d53f35e6-0fcc-4114-a474-a5c39535e901
+        name:
+          type: string
+          example: Galuh
+        customer_id:
+          type: string
+          example: 1
+        provider_name:
+          type: string
+          example: Indihome
+        product_type:
+          type: string
+          example: Internet Wifi
+        period:
+          type: string
+          example: 2022/2023
+        code:
+          type: string
+          example: WIFI1
+        discount_id:
+          type: string
+          example: 48b286df-6bb9-4027-b847-0820015ea68c
+        wifi_bandwith:
+          type: integer
+          example: 50
+        price:
+          type: integer
+          example: 300000
+
+    NewWifi:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Galuh
+        customer_id:
+          type: string
+          example: 1
+        provider_name:
+          type: string
+          example: Indihome
+        product_type:
+          type: string
+          example: Internet Wifi
+        period:
+          type: string
+          example: 2022/2023
+        code:
+          type: string
+          example: WIFI1
+        discount_id:
+          type: string
+          example: 48b286df-6bb9-4027-b847-0820015ea68c
+        wifi_bandwith:
+          type: integer
+          example: 50
+        price:
+          type: integer
+          example: 300000
+
+    BillInquiryWifi:
+      type: object
+      properties:
+        id:
+          type: string
+          example: WIFI-7549611124452784
+        user_id:
+          type: string
+          example: 9900b6ca-a5d0-4979-b463-388243cc2725
+        status:
+          type: string
+          example: unpaid
+        product_type:
+          type: string
+          example: telkom
+        product_detail:
+          $ref: "#/components/schemas/ProductDetail"
+        description:
+          type: string
+          example: Pembayaran Tagihan WIFI June-2023
+        discount_price:
+          type: integer
+          example: 50000
+        admin_fee:
+          type: integer
+          example: 2500
+        price:
+          type: integer
+          example: 795000
+        total_price:
+          type: integer
+          example: 747500
+        created_at:
+          type: string
+          example: "2023-06-21T10:04:09.253511227Z"
+        updated_at:
+          type: string
+          example: "2023-06-21T10:04:09.253511227Z"
+        deleted_at:
+          type: string
+          nullable: true
+          example: null
+    ProductDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          nullable: true
+          example: null
+        name:
+          type: string
+          example: usman
+        customer_id:
+          type: string
+          example: "1234567898"
+        provider_name:
+          type: string
+          example: telkom
+        product_type:
+          type: string
+          example: telkom
+        period:
+          type: string
+          example: June-2023
+        code:
+          type: string
+          example: "000"
+        discount_id:
+          type: string
+          example: "5bb3bfb3-e671-4fa8-ac6a-2c159d157502"
+        wifi_bandwith:
+          type: integer
+          example: 80
+        price:
+          type: integer
+          example: 795000
+
+    PayBillWifi:
+      type: object
+      properties:
+        id:
+          type: string
+          example: WIFI-7549611124452784
+        user_id:
+          type: string
+          example: ed88f1a9-c6c7-4179-8204-21e27c865e83
+        status:
+          type: string
+          example: successful
+        product_type:
+          type: string
+          example: telkom
+        product_detail:
+          $ref: "#/components/schemas/productdetail"
+        description:
+          type: string
+          example: Pembayaran Tagihan WIFI June-2023
+        discount_price:
+          type: integer
+          example: 0
+        admin_fee:
+          type: integer
+          example: 2500
+        price:
+          type: integer
+          example: 795000
+        total_price:
+          type: integer
+          example: 797500
+        created_at:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        updated_at:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        deleted_at:
+          type: string
+          nullable: true
+          example: null
+    productdetail:
+      type: object
+      properties:
+        CreatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          nullable: true
+          example: null
+        UpdatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        code:
+          type: string
+          example: "000"
+        customer_id:
+          type: string
+          example: "1234567891"
+        discount_id:
+          type: string
+          example: ""
+        id:
+          type: string
+          example: ""
+        name:
+          type: string
+          example: Adul
+        period:
+          type: string
+          example: June-2023
+        price:
+          type: integer
+          example: 795000
+        product_type:
+          type: string
+          example: telkom
+        provider_name:
+          type: string
+          example: telkom
+        wifi_bandwith:
+          type: integer
+          example: 80
+
+    Electricity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "2a7fa2aa-ac1a-47ad-9742-1604a6ac634a"
+        CreatedAt:
+          type: string
+          format: date-time
+          example: "2023-06-24T01:48:44.199238232Z"
+        UpdatedAt:
+          type: string
+          format: date-time
+          example: "2023-06-24T01:48:44.199238232Z"
+        DeletedAt:
+          type: string
+          example: null
+        customer_id:
+          type: string
+          example: ""
+        provider_name:
+          type: string
+          example: "PLN POSTPAID"
+        product_type:
+          type: string
+          example: "PLNPRE"
+        name:
+          type: string
+          example: ""
+        period:
+          type: string
+          example: ""
+        token:
+          type: string
+          example: ""
+        electrical_power:
+          type: integer
+          example: 0
+        discount_id:
+          type: string
+          example: ""
+        price:
+          type: integer
+          example: 0
+
+    PostPaidBillInquiryElectricity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "POSTPAID-5937024800909447"
+        user_id:
+          type: string
+          example: "9900b6ca-a5d0-4979-b463-388243cc2725"
+        status:
+          type: string
+          example: "unpaid"
+        product_type:
+          type: string
+          example: "plnpost"
+        product_detail:
+          $ref: "#/components/schemas/PLNPostProductDetail"
+        description:
+          type: string
+          example: "Pembayaran Tagihan Listrik June-2023"
+        discount_price:
+          type: number
+          example: 0
+        admin_fee:
+          type: number
+          example: 2500
+        price:
+          type: number
+          example: 119274
+        total_price:
+          type: number
+          example: 121774
+        created_at:
+          type: string
+          format: date-time
+          example: "2023-06-24T06:56:13.947720121Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2023-06-24T06:56:13.947720121Z"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+    PLNPostProductDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          format: date-time
+          nullable: true
+        customer_id:
+          type: string
+          example: "98981"
+        provider_name:
+          type: string
+          example: "plnpost"
+        product_type:
+          type: string
+          example: "plnpost"
+        name:
+          type: string
+          example: "usman"
+        period:
+          type: string
+          example: "June-2023"
+        token:
+          type: string
+          example: ""
+        electrical_power:
+          type: number
+          example: 3500
+        discount_id:
+          type: string
+          example: ""
+        price:
+          type: number
+          example: 119274
+
+    PrePaidBillInquiryElectricity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "PREPAID-6505401352779029"
+        user_id:
+          type: string
+          example: "9900b6ca-a5d0-4979-b463-388243cc2725"
+        status:
+          type: string
+          example: "unpaid"
+        product_type:
+          type: string
+          example: "plnpre"
+        product_detail:
+          $ref: "#/components/schemas/PLNPreProductDetail"
+        description:
+          type: string
+          example: "Pembelian Token Listrik 20000.00"
+        discount_price:
+          type: number
+          example: 0
+        admin_fee:
+          type: number
+          example: 2500
+        price:
+          type: number
+          example: 20000
+        total_price:
+          type: number
+          example: 22500
+        created_at:
+          type: string
+          format: date-time
+          example: "2023-06-24T01:49:07.482302112Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2023-06-24T01:49:07.482302112Z"
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+    PLNPreProductDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          format: date-time
+          nullable: true
+        customer_id:
+          type: string
+          example: ""
+        provider_name:
+          type: string
+          example: "plnpre"
+        product_type:
+          type: string
+          example: "plnpre"
+        name:
+          type: string
+          example: "usman"
+        period:
+          type: string
+          example: ""
+        token:
+          type: string
+          example: ""
+        electrical_power:
+          type: number
+          example: 7700
+        discount_id:
+          type: string
+          example: ""
+        price:
+          type: number
+          example: 20000
+
+    PayBillElectricity:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "POSTPAID-5937024800909447"
+        user_id:
+          type: string
+          example: "9900b6ca-a5d0-4979-b463-388243cc2725"
+        status:
+          type: string
+          example: "successful"
+        product_type:
+          type: string
+          example: "plnpost"
+        product_detail:
+          $ref: "#/components/schemas/PLNPayBillProductDetail"
+        description:
+          type: string
+          example: "Pembayaran Tagihan Listrik June-2023"
+        discount_price:
+          type: number
+          example: 0
+        admin_fee:
+          type: number
+          example: 2500
+        price:
+          type: number
+          example: 119274
+        total_price:
+          type: number
+          example: 121774
+        created_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        deleted_at:
+          type: string
+          example: null
+    PLNPayBillProductDetail:
+      type: object
+      properties:
+        CreatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          format: date-time
+          nullable: true
+        UpdatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        customer_id:
+          type: string
+          example: "98981"
+        discount_id:
+          type: string
+          example: ""
+        electrical_power:
+          type: number
+          example: 3500
+        id:
+          type: string
+          example: ""
+        name:
+          type: string
+          example: "usman"
+        period:
+          type: string
+          example: "June-2023"
+        price:
+          type: number
+          example: 119274
+        product_type:
+          type: string
+          example: "plnpost"
+        provider_name:
+          type: string
+          example: "plnpost"
+        token:
+          type: string
+          example: ""
+
+    BPJS:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 13b0aaab-0339-4a73-9ae0-99f4d0ef7381
+        CreatedAt:
+          type: string
+          example: 2023-06-22T11:49:17.900124Z
+        UpdatedAt:
+          type: string
+          example: 2023-06-22T11:49:17.900124Z
+        DeletedAt:
+          type: string
+          example: null
+        customer_id:
+          type: string
+          example: ""
+        provider_name:
+          type: string
+          example: BPJS
+        product_type:
+          type: string
+          example: BPJSKS
+        name:
+          type: string
+          example: Aul
+        period:
+          type: string
+          example: 2021-2022
+        class:
+          type: string
+          example: 1
+        Number_of_family:
+          type: integer
+          example: 1
+        discount_id:
+          type: string
+          example: ab57b255-64ea-4899-aa46-1d028c93da6c
+        price:
+          type: number
+          example: 140000
+
+    BillInquiryInsuranceBPJS:
+      type: object
+      properties:
+        id:
+          type: string
+          example: Insurance-8011010927957906
+        user_id:
+          type: string
+          example: 9900b6ca-a5d0-4979-b463-388243cc2725
+        status:
+          type: string
+          example: unpaid
+        product_type:
+          type: string
+          example: bpjsks
+        product_detail:
+          $ref: "#/components/schemas/ProductDetailInsuranceBPJS"
+        description:
+          type: string
+          example: Pembayaran Tagihan asuransi June-2023
+        discount_price:
+          type: integer
+          example: 0
+        admin_fee:
+          type: integer
+          example: 2500
+        price:
+          type: integer
+          example: 100000
+        total_price:
+          type: integer
+          example: 102500
+        created_at:
+          type: string
+          example: "2023-06-22T11:34:35.129643131Z"
+        updated_at:
+          type: string
+          example: "2023-06-22T11:34:35.129643131Z"
+        deleted_at:
+          type: string
+          nullable: true
+          example: null
+    ProductDetailInsuranceBPJS:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          nullable: true
+          example: null
+        customer_id:
+          type: string
+          example: "909289212"
+        provider_name:
+          type: string
+          example: bpjsks
+        product_type:
+          type: string
+          example: bpjsks
+        name:
+          type: string
+          example: usman
+        period:
+          type: string
+          example: June-2023
+        class:
+          type: string
+          example: "1"
+        number_of_family:
+          type: string
+          example: "2"
+        discount_id:
+          type: string
+          example: 722abee6-f0bc-4cf7-9590-a447e7e3857b
+        price:
+          type: integer
+          example: 200000
+
+    PayBillInsurance:
+      type: object
+      properties:
+        id:
+          type: string
+          example: Insurance-1994557244623350
+        user_id:
+          type: string
+          example: 9900b6ca-a5d0-4979-b463-388243cc2725
+        status:
+          type: string
+          example: successful
+        product_type:
+          type: string
+          example: bpjsks
+        product_detail:
+          $ref: "#/components/schemas/ProductDetailInsurance"
+        description:
+          type: string
+          example: Pembayaran Tagihan asuransi June-2023
+        discount_price:
+          type: integer
+          example: 0
+        admin_fee:
+          type: integer
+          example: 2500
+        price:
+          type: integer
+          example: 100000
+        total_price:
+          type: integer
+          example: 102500
+        created_at:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        updated_at:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        deleted_at:
+          type: string
+          nullable: true
+          example: null
+    ProductDetailInsurance:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          example: 0001-01-01T00:00:00Z
+        UpdatedAt:
+          type: string
+          example: 0001-01-01T00:00:00Z
+        DeletedAt:
+          type: string
+          example: null
+        customer_id:
+          type: string
+          example: "909289212"
+        provider_name:
+          type: string
+          example: bpjsks
+        product_type:
+          type: string
+          example: bpjsks
+        name:
+          type: string
+          example: usman
+        period:
+          type: string
+          example: June-2023
+        class:
+          type: string
+          example: "1"
+        Number_of_family:
+          type: string
+          example: "2"
+        discount_id:
+          type: string
+          example: 722abee6-f0bc-4cf7-9590-a447e7e3857b
+        price:
+          type: integer
+          example: 200000
+
+    Bank:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 28995eac-338e-4676-b75c-fd786e990791
+        CreatedAt:
+          type: string
+          example: 2023-06-20T15:05:22.072689Z
+        UpdatedAt:
+          type: string
+          example: 2023-06-20T15:05:22.072689Z
+        DeletedAt:
+          type: string
+          example: null
+        name:
+          type: string
+          example: BNI
+        image:
+          type: string
+          example: https://res.cloudinary.com/duoehn6px/image/upload/v1687274160/ppob/mduxepf2ucpinuetvbtf.png
+        bank_code:
+          type: string
+          example: "001"
+          default: "001"
+
+    Discount:
+      type: object
+      properties:
+        id:
+          type: string
+          example: a2d3d511-476d-4220-9ce1-27b869213bdb
+        CreatedAt:
+          type: string
+          example: 2023-06-20T15:05:22.072689Z
+        UpdatedAt:
+          type: string
+          example: 2023-06-20T15:05:22.072689Z
+        DeletedAt:
+          type: string
+          example: null
+        discount_code:
+          type: string
+          example: "015"
+          default: "015"
+        image:
+          type: string
+          example: ""
+        description:
+          type: string
+          example: 21232
+        discount_price:
+          type: integer
+          example: 10000
+    Users:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 2098604d-0038-47e7-a074-2646412b45c2
+        name:
+          type: string
+          example: iyan yan
+        email:
+          type: string
+          example: iyan22@gmail.com
+        balance:
+          type: integer
+          example: 19818200
+        pin:
+          type: string
+          example: ""
+        phone:
+          type: string
+          example: 082112979359
+        image:
+          type: string
+          example: ""
+        address:
+          type: string
+          example: ""
+        created_at:
+          type: string
+          format: date-time
+          example: 2023-06-20T16:57:35.638383Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2023-06-23T12:55:55.783098Z
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 7ccf7abd-5c33-4042-8b4c-453208313453
+        CreatedAt:
+          type: string
+          format: date-time
+          example: 2023-06-24T11:24:15.879414Z
+        UpdatedAt:
+          type: string
+          format: date-time
+          example: 2023-06-24T11:24:15.879414Z
+        DeletedAt:
+          type: string
+          example: null
+        name:
+          type: string
+          example: munaroh
+        email:
+          type: string
+          example: munaroh@gmail.com
+        phone:
+          type: string
+          example: 08494664646949
+        amount:
+          type: integer
+          example: 0
+        password:
+          type: string
+          example: $2a$10$BnX9mx60E2x2DfkRKTTFFepG3f9dJeZ5dgdfP0CQdrJXFQjHGBMwa
+        user_type:
+          type: string
+          example: user
+        pin:
+          type: string
+          example: ""
+        image:
+          type: string
+          example: ""
+        address:
+          type: string
+          example: ""
+
+    Amount:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          format: date-time
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          nullable: true
+          format: date-time
+          example: null
+        user_id:
+          type: string
+          example: "9900b6ca-a5d0-4979-b463-388243cc2725"
+        va_number:
+          type: string
+          example: "100536000000022676"
+        va_status:
+          type: string
+          example: "WAITING_PAYMENT"
+        bank_code:
+          type: string
+          example: "002"
+        amount:
+          type: number
+          example: 0
+        expiration_time:
+          type: integer
+          format: int64
+          example: 1687427820000
+        name:
+          type: string
+          example: ""
+
+    AmountStatus:
+      type: object
+      properties:
+        id:
+          type: string
+          example: TOPUP-2c7981d9-7e51-4add-aa68-f272baeb583c
+        user_id:
+          type: string
+          example: 9900b6ca-a5d0-4979-b463-388243cc2725
+        status:
+          type: string
+          example: successful
+        product_type:
+          type: string
+          example: topup
+        product_detail:
+          $ref: "#/components/schemas/ProductDetailAmount"
+        description:
+          type: string
+          example: ""
+        discount_price:
+          type: integer
+          example: 0
+        admin_fee:
+          type: integer
+          example: 2500
+        price:
+          type: integer
+          example: 0
+        total_price:
+          type: integer
+          example: 0
+        created_at:
+          type: string
+          example: "2023-06-24T16:36:53.337923659Z"
+        updated_at:
+          type: string
+          example: "2023-06-24T16:36:53.337923659Z"
+        deleted_at:
+          type: string
+          nullable: true
+          example: null
+    ProductDetailAmount:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ""
+        CreatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          example: "0001-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          nullable: true
+          example: null
+        user_id:
+          type: string
+          example: "9900b6ca-a5d0-4979-b463-388243cc2725"
+        va_number:
+          type: string
+          example: "100536000000022676"
+        va_status:
+          type: string
+          example: ""
+        bank_code:
+          type: string
+          example: ""
+        amount:
+          type: integer
+          example: 10000000
+        expiration_time:
+          type: integer
+          example: 0
+        name:
+          type: string
+          example: ""
+
+    Transactionbyproducttype:
+      type: object
+      properties:
+        id:
+          type: string
+          example: pulsa-d4ad1357-44e1-4cee-b858-7876b484602c
+        product:
+          type: string
+          example: pulsa
+        count_price:
+          type: integer
+          example: 130000
+        month:
+          type: string
+          example: ""
+        year:
+          type: integer
+          example: 0
+
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          example: 10
+        page:
+          type: integer
+          example: 1

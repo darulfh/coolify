@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Reset some default styles */
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      ul,
+      ol,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Center vertically */
+      }
+
+      .container {
+        max-width: 600px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .invoice-header {
+        display: flex;
+        align-items: center;
+        margin: 0 20px 40px 10px;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .invoice-logo {
+        width: 50px;
+        height: 85px;
+      }
+
+      .invoice-title {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .order-id {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .payment-method {
+        font-size: 14px;
+      }
+
+      .invoice-details {
+        margin-bottom: 20px;
+      }
+
+      .transaction-details {
+        margin-bottom: 20px;
+      }
+
+      .detail-label,
+      .total-label {
+        font-weight: bold;
+      }
+
+      .invoice-footer {
+        margin-top: 40px;
+        text-align: center;
+      }
+
+      .social-icons {
+        margin-top: 20px;
+      }
+
+      .social-icons img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      .contact-info {
+        margin-top: 20px;
+      }
+
+      /* New CSS class for text label and content justification */
+      .text-justify-between {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .container {
+          padding: 10px;
+        }
+        .invoice-header {
+          flex-direction: column;
+          align-items: center;
+        }
+        .invoice-logo {
+          width: 40px;
+          height: 68px;
+        }
+        .invoice-title {
+          font-size: 20px;
+          margin-top: 10px;
+        }
+        .order-id {
+          font-size: 16px;
+        }
+        .payment-method {
+          font-size: 12px;
+        }
+        .invoice-footer {
+          margin-top: 20px;
+        }
+        .social-icons img {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="invoice-header">
+        <div class="logo">
+          <img
+            class="invoice-logo"
+            src="https://res.cloudinary.com/duoehn6px/image/upload/v1687359124/ppob/jzvolgffbkgtspzqcs7r.png"
+            alt="Logo"
+          />
+          <h1 class="invoice-title">Invoice</h1>
+        </div>
+      </div>
+      <div class="invoice-details">
+        <p class="order-id">Order ID: {{.OrderId}}</p>
+        <p class="payment-method">Metode Pembayaran: SkuyPay</p>
+        <p>{{.Description}}</p>
+      </div>
+      <div class="transaction-details">
+        <p class="detail-label">Rincian Transaksi</p>
+        <table>
+          <tr>
+            <td>Penyedia Layanan</td>
+            <td>{{.ProviderName}}</td>
+          </tr>
+          <!-- BPJS -->
+          {{if eq .ProductType "BPJS"}}
+          <tr>
+            <td>Jumlah Keluarga:</td>
+            <td>{{.NumberOffamily}}</td>
+          </tr>
+          <tr>
+            <td>Kelas:</td>
+            <td>{{.Class}}</td>
+          </tr>
+
+          <!-- LISTRIK -->
+          {{else if eq .ProductType "ELECTRICITY"}}
+          <tr>
+            <td>Tarif daya:</td>
+            <td>{{.ElectricalPower}} VA</td>
+          </tr>
+
+          {{ if ne .Amount "" }}
+          <tr>
+            <td>Token:</td>
+            <td>{{.Token}}</td>
+          </tr>
+          {{ end }} {{else if eq .ProductType "WIFI"}}
+          <tr>
+            <td>Kecepatan:</td>
+            <td>{{.WifiBandwith}}</td>
+          </tr>
+          {{end}}
+          <tr>
+            <td>Periode:</td>
+            <td>{{.Period}}</td>
+          </tr>
+          <tr>
+            <td>Status:</td>
+            <td>{{.Status}}</td>
+          </tr>
+          <tr>
+            <td>Deskripsi:</td>
+            <td>{{.Description}}</td>
+          </tr>
+          <tr>
+            <td>Nama:</td>
+            <td>{{.CustomerName}}</td>
+          </tr>
+          <tr>
+            <td>Harga:</td>
+            <td>RP.{{.Price}}</td>
+          </tr>
+          <tr>
+            <td>Biaya Admin:</td>
+            <td>RP.{{.AdminFee}}</td>
+          </tr>
+          {{if gt .DiscountPrice 0.0}}
+          <tr>
+            <td>Promo:</td>
+            <td>RP.{{.DiscountPrice}}</td>
+          </tr>
+          {{end}}
+          <tr>
+            <td class="total-label">Total Pembayaran:</td>
+            <td>RP.{{.TotalPrice}}</td>
+          </tr>
+        </table>
+      </div>
+      <p>*Simpan invoice ini sebagai bukti pembayaran yang sah</p>
+      <div class="invoice-footer">
+        <p>Follow us on:</p>
+        <div class="social-icons">
+          <img
+            src="https://res.cloudinary.com/ddleabcu2/image/upload/v1687440327/ppob/tw5v6ducw6ee76ghka9c.png"
+            alt="Twitter"
+          />
+          <img
+            src="https://res.cloudinary.com/ddleabcu2/image/upload/v1687440451/ppob/nuocmo2f6qejfruiedqe.png"
+            alt="Facebook"
+          />
+          <img
+            src="https://res.cloudinary.com/ddleabcu2/image/upload/v1687440400/ppob/fd8qkyywqr6broxxzt4i.png"
+            alt="Instagram"
+          />
+        </div>
+        <p>
+          Silahkan hubungi kami di skuypay10@gmail.com jika anda ada pertanyaan
+          lebih lanjut mengenai pesanan anda
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
