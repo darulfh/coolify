@@ -57,26 +57,31 @@ func LoadConfig() *Config {
 	// 	panic(fmt.Errorf("fatal error config file: %w", err))
 	// }
 
-	AppConfig := Config{
-		DBHost:             "103.174.115.239",
-		DBUsername:         "postgres",
-		DBPassword:         "ZfcnO9WYdcbNqvRtwH4WrA99nSax2t8yBdASIoNzKCNeIs8hXI8xy7lQWrD4DeyP",
-		DBName:             "postgres",
-		DBPort:             "5432",
-		SSLMode:            "require",
-		SmtpHost:           "smtp.gmail.com",
-		SmtpPort:           587,
-		SenderEmail:        "skuypay10@gmail.com",
-		EmailPassword:      "wrdvpewgnatmfnpa",
-		AppPort:            "2424",
-		SecretJWT:          "secret",
-		BaseUrl:            "https://api-stg.oyindonesia.com/api",
-		Username:           "darulfh",
-		ApiKey:             "6197039c-6a7d-47fa-9fa2-094639f9d0f1",
-		CloudName:          "doizrq2wc",
-		CloudKey:           "494258757634754",
-		ApiSecret:          "UmpmAQ17amfjHx-HMb8a5_DsNrg",
-		CloudFolder:        "ppob",
+	AppConfig = Config{
+		DBHost:     "103.174.115.239",
+		DBUsername: "postgres",
+		DBPassword: "ZfcnO9WYdcbNqvRtwH4WrA99nSax2t8yBdASIoNzKCNeIs8hXI8xy7lQWrD4DeyP",
+		DBName:     "postgres",
+		DBPort:     "5432",
+		SSLMode:    "require",
+
+		SmtpHost:      "smtp.gmail.com",
+		SmtpPort:      587,
+		SenderEmail:   "skuypay10@gmail.com",
+		EmailPassword: "wrdvpewgnatmfnpa",
+
+		AppPort:   "2424",
+		SecretJWT: "S3CR3t",
+
+		BaseUrl:  "https://api-stg.oyindonesia.com/api",
+		Username: "darulfh",
+		ApiKey:   "6197039c-6a7d-47fa-9fa2-094639f9d0f1",
+
+		CloudName:   "doizrq2wc",
+		CloudKey:    "494258757634754",
+		ApiSecret:   "UmpmAQ17amfjHx-HMb8a5_DsNrg",
+		CloudFolder: "ppob",
+
 		UsernameIak:        "081383566428",
 		ApiKeyIak:          "45666815bf56abb1PGMd",
 		BaseUrlIakPostPaid: "https://testpostpaid.mobilepulsa.net",
