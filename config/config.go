@@ -70,7 +70,7 @@ func LoadConfig() *Config {
 		SenderEmail:   "skuypay10@gmail.com",
 		EmailPassword: "wrdvpewgnatmfnpa",
 
-		AppPort:   "2424",
+		AppPort:   "8080",
 		SecretJWT: "S3CR3t",
 
 		BaseUrl:  "https://api-stg.oyindonesia.com/api",
