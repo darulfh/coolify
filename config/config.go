@@ -56,7 +56,6 @@ func LoadConfig() *Config {
 	// if err != nil {
 	// 	panic(fmt.Errorf("fatal error config file: %w", err))
 	// }
-
 	AppConfig = Config{
 		DBHost:     "103.174.115.239",
 		DBUsername: "postgres",
