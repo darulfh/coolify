@@ -26,4 +26,6 @@ RUN apk --no-cache add ca-certificates curl
 
 COPY --from=cache /app/coolify .
 
+EXPOSE 8080
+
 CMD ["./coolify"]
