@@ -68,9 +68,8 @@ func LoadConfig() *Config {
 		SmtpPort:      587,
 		SenderEmail:   "skuypay10@gmail.com",
 		EmailPassword: "wrdvpewgnatmfnpa",
-
-		AppPort:   "8080",
-		SecretJWT: "S3CR3t",
+		AppPort:       "8080",
+		SecretJWT:     "S3CR3t",
 
 		BaseUrl:  "https://api-stg.oyindonesia.com/api",
 		Username: "darulfh",
