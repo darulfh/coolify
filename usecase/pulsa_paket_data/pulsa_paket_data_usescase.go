@@ -160,9 +160,9 @@ func (uc *pulsaPaketDataUsecase) CreateTransactionPPD(userID string, payload dto
 		Status:        model.STATUS_SUCCESSFUL,
 		ProductType:   ppd.Type,
 		Description:   fmt.Sprintf("Pembelian Pulsa Paket Data  %s ", ppd.Type),
-		AdminFee:      2000,
+		AdminFee:      0,
 		Price:         ppd.Price,
-		TotalPrice:    ppd.Price + 2000 - discount.DiscountPrice,
+		TotalPrice:    ppd.Price + 0 - discount.DiscountPrice,
 		ProductDetail: td,
 		DiscountPrice: discount.DiscountPrice,
 	}
