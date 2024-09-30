@@ -10,6 +10,7 @@ import (
 	m "github.com/darulfh/skuy_pay_be/usecase/middlewares"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -33,10 +34,10 @@ func main() {
 
 	database.Migrate(db)
 
-	// e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-	// 	AllowOrigins: []string{"*"},
-	// 	AllowHeaders: []string{"*"},
-	// }))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{"*"},
+	}))
 
 	routes.Routes(e, db)
 	m.LogMiddlewares(e)
