@@ -38,6 +38,7 @@ func (*iakApiRepository) IakTopUpPayRepository(payload *model.PrePaidIakBody) (*
 
 	payload.Sign = sign(payload.RefID)
 
+	/// TODO: change the URL to production
 	// resp, err := doRequestIak(http.MethodPost, "https://prepaid.iak.dev/api/top-up", payload)
 	resp, err := doRequestIak(http.MethodPost, "https://prepaid.iak.id/api/top-up", payload)
 
@@ -241,6 +242,7 @@ func (*iakApiRepository) ElectricityTokenInquiryRepository(payload *model.PrePai
 	payload.Username = config.AppConfig.UsernameIak
 	payload.Sign = sign(payload.CustomerID)
 
+	// TODO: change the URL to production
 	// resp, err := doRequestIak(http.MethodPost, "https://prepaid.iak.dev/api/inquiry-pln", payload)
 	resp, err := doRequestIak(http.MethodPost, "https://prepaid.iak.id/api/inquiry-pln", payload)
 

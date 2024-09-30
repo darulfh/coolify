@@ -84,7 +84,8 @@ func LoadConfig() *Config {
 		ApiKeyIak:   "54566815caf15d88s42c",
 		// ApiKeyIak:          "45666815bf56abb1PGMd",
 
-		BaseUrlIakPostPaid: "https://testpostpaid.mobilepulsa.net",
+		// BaseUrlIakPostPaid: "https://testpostpaid.mobilepulsa.net",
+		BaseUrlIakPostPaid: "https://mobilepulsa.net",
 	}
 
 	return &AppConfig
