@@ -80,8 +80,10 @@ func LoadConfig() *Config {
 		ApiSecret:   "UmpmAQ17amfjHx-HMb8a5_DsNrg",
 		CloudFolder: "ppob",
 
-		UsernameIak:        "081383566428",
-		ApiKeyIak:          "45666815bf56abb1PGMd",
+		UsernameIak: "081383566428",
+		ApiKeyIak:   "54566815caf15d88s42c",
+		// ApiKeyIak:          "45666815bf56abb1PGMd",
+
 		BaseUrlIakPostPaid: "https://testpostpaid.mobilepulsa.net",
 	}
 
