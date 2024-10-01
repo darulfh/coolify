@@ -81,11 +81,11 @@ func LoadConfig() *Config {
 		CloudFolder: "ppob",
 
 		UsernameIak: "081383566428",
-		ApiKeyIak:   "54566815caf15d88s42c",
-		// ApiKeyIak:          "45666815bf56abb1PGMd",
+		// ApiKeyIak:   "54566815caf15d88s42c",
+		ApiKeyIak: "45666815bf56abb1PGMd",
 
-		// BaseUrlIakPostPaid: "https://testpostpaid.mobilepulsa.net",
-		BaseUrlIakPostPaid: "https://mobilepulsa.net",
+		BaseUrlIakPostPaid: "https://testpostpaid.mobilepulsa.net",
+		// BaseUrlIakPostPaid: "https://mobilepulsa.net",
 	}
 
 	return &AppConfig
